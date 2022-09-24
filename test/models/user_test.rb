@@ -15,6 +15,7 @@ class UserTest < ActiveSupport::TestCase
   test "should find involved grids" do
     assert_includes @user.involved_grids, @involved_grid
   end
+  
 
   test "should return owned and involved gris" do
     assert_includes @user.grids, @owned_grid
