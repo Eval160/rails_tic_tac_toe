@@ -22,6 +22,26 @@ def create_users
   end
 end
 
+def game_simulation(grid)
+  while grid.in_progress? && grid.unplayed_cells.count > 0
+    cell = grid.unplayed_cells.sample
+    player = grid.user_who_plays
+    puts "#{player.nickname.capitalize} plays cells n°#{cell.position}"
+    cell.update(user: player)
+  end
+end
+
+def create_grids
+  common_users = User.excluding(User.ia)
+  common_users.first(4).each do |user|
+    puts "Create grids for player #{user.nickname}"
+    opponents = common_users.excluding(user)
+    4.times do 
+      grid = Grid.create!(user: user, opponent: opponents.sample)
+      game_simulation(grid)
+    end
+  end
+end
 
 puts "Clean DB"
 clean_db
@@ -30,4 +50,8 @@ puts "DB cleaned"
 puts "Create users"
 create_users
 puts "#{User.count} users created"
+
+puts "Create grids"
+create_grids
+puts "#{Grid.count} grids created"
 

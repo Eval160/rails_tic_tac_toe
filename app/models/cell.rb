@@ -30,7 +30,7 @@ class Cell < ApplicationRecord
 
     if all_cells_in_row(user_cells, position_x)  || all_cells_in_column(user_cells, position_y) || all_cells_in_diagonal(user_cells)
       grid.finished!
-    elsif grid.all_cells_played?
+    elsif grid.unplayed_cells.count.zero?
       grid.draw!
     end
   end

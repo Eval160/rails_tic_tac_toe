@@ -28,10 +28,6 @@ class Grid < ApplicationRecord
     last_user_who_plays = self.cells.unscope(:order).order(:updated_at).last.user
     players.find{|user| user != last_user_who_plays }
   end
-
-  def all_cells_played?
-    self.cells.all?{|c| c.user_id?}
-  end
   
   def auto_play
     return if self.unplayed_cells.empty?

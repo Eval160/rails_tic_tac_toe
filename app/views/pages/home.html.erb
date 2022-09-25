@@ -2,10 +2,12 @@
   <h1>Bienvenue sur Tic Tac Toe</h1>
   <div class="my-5">
     <% if user_signed_in? %>
-      <%= link_to "Commencer une partie", new_grid_path, class: "btn btn-primary" %>
+      <%= link_to "Commencer une nouvelle partie", new_grid_path, class: "btn btn-lg btn-primary" %>
+
+      <h2>Mes anciennes parties</h2>
+      
     <% else %>
-      <%= link_to "Se connecter", new_user_session_path, class: "btn btn-primary" %>
+      <%= link_to "Se connecter", new_user_session_path, class: "btn btn-lg btn-primary" %>
     <% end %>
-    
   </div>
 </div>
