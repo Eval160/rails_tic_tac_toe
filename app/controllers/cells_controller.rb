@@ -12,7 +12,7 @@ class CellsController < ApplicationController
           grid_html: render_to_string(partial: "grids/grid", locals: {grid: grid, user: grid.user_who_plays})
         }
       )
-      if grid.user_who_plays == ia
+      if grid.in_progress? && grid.user_who_plays == ia
         grid.auto_play
       end
 

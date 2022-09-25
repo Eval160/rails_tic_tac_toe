@@ -34,8 +34,16 @@ class Grid < ApplicationRecord
   end
   
   def auto_play
+    return if self.unplayed_cells.empty?
     cell = self.unplayed_cells.sample
     cell.update(user: User.ia)
   end
+
+  def winner
+    return nil unless self.finished?
+
+    self.cells.unscope(:order).order(:updated_at).last.user
+  end
+  
   
 end

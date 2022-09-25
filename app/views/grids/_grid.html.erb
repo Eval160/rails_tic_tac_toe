@@ -1,10 +1,17 @@
-<% if grid.finished? %>
-  <p>Partie finie!</p>
-<% elsif grid.draw? %>
-  <p>Match nul :'( </p>
-<% else %>
-  <p>C'est au tour de : <%= grid.user_who_plays.nickname %></p>
-<% end %>
+<p>
+  <% if grid.finished? %>
+    
+    <% if grid.winner == user %>
+      Bravo, tu as gagné!
+    <% else %>
+      Oups, tu as perdu contre <%= grid.winner.nickname.capitalize %> 
+    <% end %>
+  <% elsif grid.draw? %>
+    Match nul :'( 
+  <% else %>
+    C'est au tour de <%= grid.user_who_plays.nickname.capitalize %> de jouer
+  <% end %>
+</p>
 <table class="table table-bordered table-secondary align-middle grid-table shadow-sm">
   <tbody>
     <% grid.cells.each_slice(Grid::SIZE) do |line| %>
