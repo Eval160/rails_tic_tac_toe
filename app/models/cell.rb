@@ -10,12 +10,12 @@ class Cell < ApplicationRecord
   after_commit :winning_move?
 
   def position_x
-    (self.position / Grid::SIZE) + 1
+    (self.position % Grid::SIZE) + 1
   end
 
   def position_y
     return 1 if self.position.zero?
-    (self.position % Grid::SIZE + 1)
+    (self.position / Grid::SIZE + 1)
   end
   
   
@@ -28,7 +28,7 @@ class Cell < ApplicationRecord
     position_x = self.position_x
     position_y = self.position_y
 
-    if all_cells_in_row(user_cells, position_x)  || all_cells_in_column(user_cells, position_y) || all_cells_in_diagonal(user_cells)
+    if all_cells_in_row(user_cells, position_y)  || all_cells_in_column(user_cells, position_x) || all_cells_in_diagonal(user_cells)
       grid.finished!
     elsif grid.unplayed_cells.count.zero?
       grid.draw!
