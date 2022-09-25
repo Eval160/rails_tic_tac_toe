@@ -15,7 +15,6 @@ class CellsController < ApplicationController
       if grid.in_progress? && grid.user_who_plays == ia
         grid.auto_play
       end
-
       redirect_to grid_path(grid)
     else
       redirect_to grid_path(grid)

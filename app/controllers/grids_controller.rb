@@ -18,9 +18,7 @@ class GridsController < ApplicationController
   end
 
   def show
-    
   end
-  
   
   private
 
@@ -31,6 +29,5 @@ class GridsController < ApplicationController
   def set_grid
     @grid = Grid.find(params[:id])
   end
-  
-  
+
 end
