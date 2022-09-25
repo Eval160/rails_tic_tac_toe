@@ -7,6 +7,8 @@ class GridsController < ApplicationController
 
   def create
     @grid = Grid.new(grid_params)
+    @grid.opponent = ia if params[:play_with_ia] == "true"
+
     @grid.user = current_user
     if @grid.save
       redirect_to grid_path(@grid)

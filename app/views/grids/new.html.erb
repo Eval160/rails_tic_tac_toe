@@ -1,11 +1,19 @@
 <div class="row justify-content-center">
-  <div class="col-12 col-md-6">
+  <div class="col-12 col-md-10 col-lg-8">
     <div class="custom-form">
       <h2>Nouvelle partie</h2>
       <%= simple_form_for @grid do |f| %>
-        <%= f.association :opponent, 
-                          collection: User.all.excluding(current_user).collect{|u| [u.nickname, u.id]},
-                          label: "Choississez votre adversaire :" %>
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-baseline my-5">
+          <div>
+            <%= check_box_tag "play_with_ia", "true", true %>
+            <%= label_tag "play_with_ia", "Jouer contre l'ordinateur" %>
+          </div>
+          <div class="text-center text-muted my-4">OU</div>
+          <%= f.association :opponent, 
+                            collection: User.all.excluding(current_user, ia).collect{|u| [u.nickname, u.id]},
+                            label: "Choissir votre adversaire", 
+                            required: false %>
+        </div>
         <div class="form-actions">
           <%= f.submit "Jouer!", class:"btn btn-primary" %>
         </div>
