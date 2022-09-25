@@ -24,4 +24,14 @@ module GridHelper
     
   end
   
+  def cell_content(cell)
+    if cell.user.nil?
+      ""
+    elsif cell.grid.user == cell.user
+      "O"
+    else
+      "X"
+    end
+  end
+  
 end

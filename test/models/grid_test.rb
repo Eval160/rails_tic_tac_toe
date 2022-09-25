@@ -28,4 +28,18 @@ class GridTest < ActiveSupport::TestCase
       assert_equal n, grid.cells[n].position, "should be at position #{n}"
     end
   end
+
+  test "should return all players" do
+    grid = Grid.create!(user: @user, opponent: @opponent)
+    assert_equal grid.players, [@user, @opponent]
+  end
+
+  test "should return user who is playing" do
+    grid = Grid.create!(user: @user, opponent: @opponent)
+    assert_equal @user, grid.user_who_plays
+    grid.cells.first.update(user: @user)
+    assert_equal @opponent, grid.user_who_plays
+    grid.cells.last.update(user: @opponent)
+    assert_equal @user, grid.user_who_plays
+  end
 end
