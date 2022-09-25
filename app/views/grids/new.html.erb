@@ -4,15 +4,16 @@
       <h2>Nouvelle partie</h2>
       <%= simple_form_for @grid, html: {data: {controller: "grid-form"}} do |f| %>
         <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-baseline my-5">
-          <div>
+          <div class="flex-grow-1">
             <%= check_box_tag "play_with_ia", "true", true, data: {grid_form_target: "checkbox", action: "grid-form#toggleIA"} %>
             <%= label_tag "play_with_ia", "Jouer contre l'ordinateur" %>
           </div>
-          <div class="text-center text-muted my-4">OU</div>
+          <div class="text-center text-muted my-4 mx-5">OU</div>
           <%= f.association :opponent, 
                             collection: User.all.excluding(current_user, ia).collect{|u| [u.nickname, u.id]},
                             label: "Choissir votre adversaire", 
                             required: false,
+                            wrapper_class: "flex-grow-1",
                             input_html: {
                               data: {
                                 action: "grid-form#toggleIA",
