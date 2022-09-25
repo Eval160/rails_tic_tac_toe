@@ -10,6 +10,7 @@ class Cell < ApplicationRecord
   after_commit :winning_move?
 
   def position_x
+    return 1 if self.position.zero?
     (self.position % Grid::SIZE) + 1
   end
 
@@ -17,7 +18,6 @@ class Cell < ApplicationRecord
     return 1 if self.position.zero?
     (self.position / Grid::SIZE + 1)
   end
-  
   
   private
   
