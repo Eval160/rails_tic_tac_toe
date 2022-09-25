@@ -5,6 +5,13 @@ class CellsController < ApplicationController
 
     @cell.user = current_user
     if @cell.save
+      GridChannel.broadcast_to(
+        @cell.grid,
+        {
+          user_id: current_user.id,
+          grid_html: render_to_string(partial: "grids/grid", locals: {grid: @cell.grid, user: @cell.grid.user_who_plays})
+        }
+      )
       redirect_to grid_path(@cell.grid)
     else
       redirect_to grid_path(@cell.grid)

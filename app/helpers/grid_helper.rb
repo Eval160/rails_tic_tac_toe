@@ -13,10 +13,10 @@ module GridHelper
   #   end
   # end
 
-  def cell_class(cell)
+  def cell_class(user, cell)
     if cell.user.nil?
       "table-secondary"
-    elsif cell.user == current_user
+    elsif cell.user == user
       "table-primary"
     else
       "table-danger"
@@ -24,7 +24,7 @@ module GridHelper
     
   end
   
-  def cell_content(cell)
+  def cell_content(user, cell)
     if cell.user.nil?
       ""
     elsif cell.grid.user == cell.user

@@ -10,9 +10,9 @@
     <% grid.cells.each_slice(Grid::SIZE) do |line| %>
       <tr>
         <% line.each do |cell| %>
-          <td class="position-relative <%= cell_class(cell)%>">
-            <%= link_to_if cell.user.nil? && grid.user_who_plays == current_user && grid.in_progress?,
-                           cell_content(cell), 
+          <td class="position-relative <%= cell_class(user, cell)%>">
+            <%= link_to_if cell.user.nil? && grid.user_who_plays == user && grid.in_progress?,
+                           cell_content(user, cell), 
                            cell_path(cell), 
                            data: { 'turbo-method': :patch }, 
                            class:"text-reset stretched-link" %>
