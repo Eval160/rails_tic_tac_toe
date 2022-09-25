@@ -4,5 +4,8 @@
 
 import { application } from "./application"
 
+import GridSubscriptionController from "./grid_subscription_controller"
+application.register("grid-subscription", GridSubscriptionController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)

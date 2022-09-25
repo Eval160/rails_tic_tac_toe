@@ -1,8 +1,14 @@
 <div class="row justify-content-center">
   <div class="col-12 col-md-8">
     <h2 class="text-center"><%= @grid.user.nickname %> VS <%= @grid.opponent.nickname %></h2>
-    <div class="text-center">
-      <%= render 'grid', grid: @grid %>
+    <div class="text-center"
+         data-controller="grid-subscription"
+         data-grid-subscription-grid-id-value="<%= @grid.id %>"
+         data-grid-subscription-user-id-value="<%= current_user.id %>">
+
+      <div data-grid-subscription-target="grid">
+        <%= render 'grid', grid: @grid, user: current_user %>
+      </div>
     </div>
   </div>
 </div>
