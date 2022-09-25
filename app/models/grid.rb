@@ -7,7 +7,7 @@ class Grid < ApplicationRecord
   belongs_to :opponent, class_name: "User"
   has_many :cells, -> { order(:position) }, dependent: :destroy
 
-  enum state: { in_progress: 0, finished: 1 }
+  enum state: { in_progress: 0, finished: 1, draw: 2 }
 
   def players
     [self.user, self.opponent]
@@ -20,13 +20,15 @@ class Grid < ApplicationRecord
   end
 
   def user_who_plays
-    if self.cells.pluck(:user_id).all?(&:nil?)
-      self.user
-    else
-      players = self.players
-      last_user_who_plays = self.cells.unscope(:order).order(:updated_at).last.user
-      players.find{|user| user != last_user_who_plays }
-    end
+    return self.user if self.cells.pluck(:user_id).all?(&:nil?)
+
+    players = self.players
+    last_user_who_plays = self.cells.unscope(:order).order(:updated_at).last.user
+    players.find{|user| user != last_user_who_plays }
+  end
+
+  def all_cells_played?
+    self.cells.all?{|c| c.user_id?}
   end
   
 end
