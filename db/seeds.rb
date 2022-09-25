@@ -25,8 +25,7 @@ end
 def game_simulation(grid)
   while grid.in_progress? && grid.unplayed_cells.count > 0
     cell = grid.unplayed_cells.sample
-    player = grid.user_who_plays
-    puts "#{player.nickname.capitalize} plays cells n°#{cell.position}"
+    player = grid.unplayed_cells.count.odd? ? grid.user : grid.opponent
     cell.update(user: player)
   end
 end
