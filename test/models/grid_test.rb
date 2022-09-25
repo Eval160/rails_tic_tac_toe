@@ -17,14 +17,14 @@ class GridTest < ActiveSupport::TestCase
     assert grid.in_progress?
   end
 
-  test "should generate 6 cells after grid creation" do
+  test "should generate 9 cells after grid creation" do
     grid = Grid.create!(user: @user, opponent: @opponent)
-    assert_equal 6, grid.cells.count
+    assert_equal Grid::CELLS_COUNT, grid.cells.count
   end
 
   test "should order grid's cells by position" do
     grid = Grid.create!(user: @user, opponent: @opponent)
-    6.times do |n|
+    Grid::CELLS_COUNT.times do |n|
       assert_equal n, grid.cells[n].position, "should be at position #{n}"
     end
   end
