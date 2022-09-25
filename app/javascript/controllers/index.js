@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import GridFormController from "./grid_form_controller"
+application.register("grid-form", GridFormController)
+
 import GridSubscriptionController from "./grid_subscription_controller"
 application.register("grid-subscription", GridSubscriptionController)
 
