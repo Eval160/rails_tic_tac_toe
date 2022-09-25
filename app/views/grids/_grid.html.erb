@@ -29,3 +29,10 @@
     <% end %>
   </tbody>
 </table>
+
+
+<% unless grid.in_progress? %>
+  <div class="text-center mt-5">
+    <%= link_to "Refaire une partie", new_grid_path, class:"btn btn-outline-primary" %>
+  </div>
+<% end %>

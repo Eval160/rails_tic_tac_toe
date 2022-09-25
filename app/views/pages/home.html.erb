@@ -2,12 +2,51 @@
   <h1>Bienvenue sur Tic Tac Toe</h1>
   <div class="my-5">
     <% if user_signed_in? %>
-      <%= link_to "Commencer une nouvelle partie", new_grid_path, class: "btn btn-lg btn-primary" %>
-
-      <h2>Mes anciennes parties</h2>
+      <div class="my-5">
+        <%= link_to "Commencer une nouvelle partie", new_grid_path, class: "btn btn-lg btn-outline-primary" %>
+      </div>
       
+      
+      <% if @in_progress_grids.any? %>
+        <section class="mb-3">
+          <h2>Mes parties en cours</h2>
+          <ul class="list-group">
+            <% @in_progress_grids.each do |grid| %>
+              <li class="list-group-item position-relative"> 
+                <%= link_to grid_path(grid), class:"text-reset stretched-link" do %>
+                  <span class="text-muted">VS</span>
+                  <span><%= grid.players.excluding(current_user).first.nickname.capitalize %></span>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </section>
+      <% end %>
+
+      <% if @passed_grids.any? %>
+        <section>
+          <h2>Mes anciennes parties</h2>
+          <ul class="list-group">
+            <% @passed_grids.each do |grid| %>
+              <li class="list-group-item d-flex justify-content-between"> 
+                <span><span class="text-muted">VS</span> <%= grid.players.excluding(current_user).first.nickname.capitalize %></span>
+                <% if grid.finished? %>
+                  <% if grid.winner == current_user %>
+                    <span class="badge rounded-pill bg-success">Gagné</span>
+                  <% else %>
+                    <span class="badge rounded-pill bg-secondary">Perdu</span>
+                  <% end %>
+                <% else %>
+                  <span class="badge rounded-pill bg-light text-dark">Match nul</span>
+                <% end %>
+                
+              </li>
+            <% end %>
+          </ul>
+        </section>
+      <% end %>
     <% else %>
-      <%= link_to "Se connecter", new_user_session_path, class: "btn btn-lg btn-primary" %>
+      <%= link_to "Se connecter", new_user_session_path, class: "btn btn-lg btn-outline-primary" %>
     <% end %>
   </div>
 </div>
