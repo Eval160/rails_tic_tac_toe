@@ -6,6 +6,8 @@ class Grid < ApplicationRecord
   belongs_to :user
   belongs_to :opponent, class_name: "User"
   has_many :cells, -> { order(:position) }, dependent: :destroy
+  has_many :unplayed_cells, -> { where(user: nil)}, class_name: "Cell", foreign_key: "grid_id"
+  has_many :played_cells, -> { where.not(user: nil)}, class_name: "Cell", foreign_key: "grid_id"
 
   enum state: { in_progress: 0, finished: 1, draw: 2 }
 
@@ -29,6 +31,11 @@ class Grid < ApplicationRecord
 
   def all_cells_played?
     self.cells.all?{|c| c.user_id?}
+  end
+  
+  def auto_play
+    cell = self.unplayed_cells.sample
+    cell.update(user: User.ia)
   end
   
 end
