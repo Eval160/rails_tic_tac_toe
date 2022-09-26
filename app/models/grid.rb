@@ -31,22 +31,23 @@ class Grid < ApplicationRecord
 
   def next_cell_to_play
     last_played_cell = self.played_cells.unscope(:order).order(:updated_at).last
-
     Grid::SIZE.times do |n|
       if self.played_cells.where(user: User.ia).by_row(n + 1).count == 2
-        return self.unplayed_cells.by_row(n + 1).first
+        cell = self.unplayed_cells.by_row(n + 1).first
       elsif self.played_cells.where(user: User.ia).by_column(n + 1).count == 2
-        return self.unplayed_cells.by_column(n + 1).first
+        cell = self.unplayed_cells.by_column(n + 1).first
       end
     end
 
     if self.played_cells.by_row(last_played_cell.position_y) == 2
-      return self.unplayed_cells.by_row(last_played_cell.position_y).first
+      cell = self.unplayed_cells.by_row(last_played_cell.position_y).first
     elsif self.played_cells.by_column(last_played_cell.position_x) == 2
-      return self.unplayed_cells.by_column(last_played_cell.position_x).first
+      cell = self.unplayed_cells.by_column(last_played_cell.position_x).first
     else
-      return self.unplayed_cells.sample
+      cell = self.unplayed_cells.sample
     end
+    cell = cell || self.unplayed_cells.sample
+    return cell
   end
   
   
